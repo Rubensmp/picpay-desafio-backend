@@ -2,12 +2,13 @@ import { FastifyInstance } from "fastify";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
 import { z } from "zod";
 import { prisma } from "../lib/prisma";
+import { BadRequest } from "./_errors/bad-request";
 
 export async function getUserTransactions(app: FastifyInstance){
   app.withTypeProvider<ZodTypeProvider>().get('/user/transactions/:userId', {
     schema: {
-      summary: 'Get user transactions',
-      tags: ['User'],
+      summary: 'Get user transaction history',
+      tags: ['user'],
       params: z.object({
         userId: z.string().uuid(),
       }),
@@ -33,6 +34,16 @@ export async function getUserTransactions(app: FastifyInstance){
     const { userId } = request.params
     const { pageIndex } = request.query
 
+    const user = await prisma.user.findUnique({
+      where: {
+        id: userId
+      }
+    })
+
+    if(user === null) {
+      throw new BadRequest('User not found')
+    }
+
     const transactions = await prisma.transaction.findMany({
       select: {
         id: true,
@@ -45,10 +56,10 @@ export async function getUserTransactions(app: FastifyInstance){
       where: {
         OR: [
           {
-            payeeId: userId
+            payeeId: user.id
           },
           {
-            payerId: userId
+            payerId: user.id
           }
         ]
       },
