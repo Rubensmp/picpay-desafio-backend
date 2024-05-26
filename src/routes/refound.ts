@@ -2,8 +2,7 @@ import { FastifyInstance } from "fastify";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
 import { z } from "zod";
 import { prisma } from "../lib/prisma";
-import axios from "axios";
-import * as nodemailer from "nodemailer";
+import { BadRequest } from "./_errors/bad-request";
 
 export async function refoundToUser(app: FastifyInstance){
   app.withTypeProvider<ZodTypeProvider>().get('/transaction/:transactionId', {
@@ -29,7 +28,7 @@ export async function refoundToUser(app: FastifyInstance){
     })
 
     if(transaction === null) {
-      throw new Error('Transaction not found')
+      throw new BadRequest('Transaction not found')
     }
 
     const [payer, payee] = await Promise.all([
@@ -46,11 +45,11 @@ export async function refoundToUser(app: FastifyInstance){
     ])
 
     if(payer === null) {
-      throw new Error('Payer not found')
+      throw new BadRequest('Payer not found')
     }
 
     if(payee === null) {
-      throw new Error('Payee not found')
+      throw new BadRequest('Payee not found')
     }
 
 

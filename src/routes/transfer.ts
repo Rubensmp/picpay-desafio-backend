@@ -4,6 +4,7 @@ import { z } from "zod";
 import { prisma } from "../lib/prisma";
 import axios from "axios";
 import * as nodemailer from "nodemailer";
+import { BadRequest } from "./_errors/bad-request";
 
 export async function tranferToUser(app: FastifyInstance){
   app.withTypeProvider<ZodTypeProvider>().post('/transaction/:payerId/:payeeId', {
@@ -31,11 +32,11 @@ export async function tranferToUser(app: FastifyInstance){
       const authorizeResponse = await axios.get('https://util.devi.tools/api/v2/authorize');
 
       if (authorizeResponse.data.data.authorization !== true) {
-        throw new Error('Authorization failed');
+        throw new BadRequest('Authorization failed');
       }
 
     } catch (error) {
-      throw new Error('Authorization failed');
+      throw new BadRequest('Authorization failed');
     }
 
     const [payer, payee] = await Promise.all([
@@ -52,19 +53,19 @@ export async function tranferToUser(app: FastifyInstance){
     ])
 
     if(payer === null) {
-      throw new Error('Payer not found')
+      throw new BadRequest('Payer not found')
     }
 
     if(payee === null) {
-      throw new Error('Payee not found')
+      throw new BadRequest('Payee not found')
     }
 
     if(payer.isShopkeeper) {
-      throw new Error('Payer cant transfer money.')
+      throw new BadRequest('Payer cant transfer money.')
     }
 
     if(payer.balance < amount){
-      throw new Error('Payer do not have money enough')
+      throw new BadRequest('Payer do not have money enough')
     }
 
     const transaction = await prisma.transaction.create({

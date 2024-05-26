@@ -3,6 +3,7 @@ import { ZodTypeProvider } from "fastify-type-provider-zod";
 import { z } from "zod";
 import { prisma } from "../lib/prisma";
 import { handleCPF } from "../utils/handle-cnpj-cpf";
+import { BadRequest } from "./_errors/bad-request";
 
 
 export async function registerForUser(app: FastifyInstance){
@@ -36,7 +37,7 @@ export async function registerForUser(app: FastifyInstance){
     })
 
     if(userFromEmail !== null) {
-      throw new Error('Another user with same email already exists')
+      throw new BadRequest('Another user with same email already exists')
     }
 
     const userFromCPF = await prisma.user.findUnique({
@@ -46,7 +47,7 @@ export async function registerForUser(app: FastifyInstance){
     })
 
     if(userFromCPF !== null) {
-      throw new Error('Another user with same CPF/CNPJ already exists')
+      throw new BadRequest('Another user with same CPF/CNPJ already exists')
     }
 
     const user = await prisma.user.create({
