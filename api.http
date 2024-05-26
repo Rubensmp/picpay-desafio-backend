@@ -26,7 +26,7 @@ Get http://localhost:3333/transaction/refound/fe924f7a-a216-4d0d-bf95-406e826296
 ###
 
 //:userId
-Get http://localhost:3333/user/transactions/61030954-11e2-4a9e-1232-e3dea34def4f
+Get http://localhost:3333/user/transactions/61030954-11e2-4a9e-b1d2-e3dea34def4f
 
 ###
 //:userId

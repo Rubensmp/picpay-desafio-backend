@@ -43,7 +43,7 @@ export async function getTransactionInfo(app: FastifyInstance){
     })
 
     if(transaction === null) {
-      throw new BadRequest('User not found')
+      throw new BadRequest('Transaction not found')
     }
 
     return reply.send({
