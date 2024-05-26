@@ -15,5 +15,5 @@ POST http://localhost:3333/transaction/72bc4df3-f748-4d64-9254-66f0a79d0f95/8488
 Content-Type: application/json
 
 {
-  "amount": 1
+  "amount": 2
 }

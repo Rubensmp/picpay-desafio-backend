@@ -143,8 +143,6 @@ export async function tranfeToUser(app: FastifyInstance){
       }
     });
 
-
-
     return reply.status(201).send({ transactionId: transaction.transactionId })
   })
 }
