@@ -10,6 +10,7 @@ import { tranferToUser } from "./routes/transfer";
 import { refoundToUser } from "./routes/refound";
 import { getUserTransactions } from "./routes/get-transactions";
 import { getUserInfo } from "./routes/get-user-info";
+import { getTransactionInfo } from "./routes/get-transaction";
 
 const app = fastify()
 
@@ -43,6 +44,7 @@ app.register(tranferToUser)
 app.register(refoundToUser)
 app.register(getUserTransactions)
 app.register(getUserInfo)
+app.register(getTransactionInfo)
 
 
 app.listen({ port: 3333, host: '0.0.0.0' }).then(() => {

@@ -5,7 +5,7 @@ import { prisma } from "../lib/prisma";
 import { BadRequest } from "./_errors/bad-request";
 
 export async function refoundToUser(app: FastifyInstance){
-  app.withTypeProvider<ZodTypeProvider>().get('/transaction/:transactionId', {
+  app.withTypeProvider<ZodTypeProvider>().get('/transaction/refound/:transactionId', {
     schema: {
       summary: 'Refound transfer',
       tags: ['transaction'],

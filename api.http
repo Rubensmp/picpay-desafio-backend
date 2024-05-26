@@ -31,3 +31,7 @@ Get http://localhost:3333/user/transactions/61030954-11e2-4a9e-1232-e3dea34def4f
 ###
 //:userId
 Get http://localhost:3333/user/a793a89d-42eb-40fa-b7e0-8d5a75d0b355
+
+###
+//:transactionId
+Get http://localhost:3333/transaction/fe924f7a-a216-4d0d-bf95-406e826296b0
