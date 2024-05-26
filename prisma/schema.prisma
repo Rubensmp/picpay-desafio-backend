@@ -31,6 +31,7 @@ model Transaction {
   transactionId String   @id @default(uuid()) @map("transaction_id")
   amount        Int
   createdAt     DateTime @default(now()) @map("created_at")
+  refoundFrom   String?  @map("refound_from")
 
   payerId String @map("payer_id")
   payeeId String @map("payeer_id")

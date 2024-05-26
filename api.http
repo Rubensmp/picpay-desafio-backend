@@ -17,3 +17,8 @@ Content-Type: application/json
 {
   "amount": 2
 }
+
+###
+
+//:transactionId
+Get http://localhost:3333/transaction/970fad7c-5408-4b01-9f88-c7edc522620d

@@ -5,7 +5,7 @@ import { prisma } from "../lib/prisma";
 import axios from "axios";
 import * as nodemailer from "nodemailer";
 
-export async function tranfeToUser(app: FastifyInstance){
+export async function tranferToUser(app: FastifyInstance){
   app.withTypeProvider<ZodTypeProvider>().post('/transaction/:payerId/:payeeId', {
     schema: {
       summary: 'Transfer money to an user',
