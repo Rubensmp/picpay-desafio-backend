@@ -1,0 +1,19 @@
+POST http://localhost:3333/user
+Content-Type: application/json
+
+{
+  "name": "Hudson Gabriel",
+  "email": "hgr@gmail.com",
+  "cpf": "07176378902",
+  "password": "123456"
+}
+
+###
+
+//:payerId/:payeeId
+POST http://localhost:3333/transaction/72bc4df3-f748-4d64-9254-66f0a79d0f95/8488ce9e-1d17-4f17-bd44-8815d130caf9
+Content-Type: application/json
+
+{
+  "amount": 1
+}

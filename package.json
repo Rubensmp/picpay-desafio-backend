@@ -1,0 +1,23 @@
+{
+  "name": "picpay-deafio-backend",
+  "version": "1.0.0",
+  "description": "PicPay Simplificado é uma plataforma de pagamentos simplificada. Nela é possível depositar e realizar transferências de dinheiro entre usuários. Temos 2 tipos de usuários, os comuns e lojistas, ambos têm carteira com dinheiro e realizam transferências entre eles.",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "tsx watch --env-file .env src/server.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.12",
+    "fastify": "^4.27.0",
+    "prisma": "^5.14.0",
+    "tsx": "^4.11.0",
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.14.0",
+    "axios": "^1.7.2",
+    "fastify-type-provider-zod": "^1.2.0",
+    "zod": "^3.23.8"
+  }
+}
