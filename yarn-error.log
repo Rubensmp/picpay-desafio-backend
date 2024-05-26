@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\ruben\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add axios
+  C:\Program Files\nodejs\node.exe C:\Users\ruben\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add @fastify/swagger
 
 PATH: 
   C:\Python312\Scripts\;C:\Python312\;C:\Program Files\Microsoft MPI\Bin\;C:\Program Files\Eclipse Adoptium\jdk-11.0.20.8-hotspot\bin;C:\Program Files (x86)\Razer Chroma SDK\bin;C:\Program Files\Razer Chroma SDK\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Git\cmd;C:\Users\ruben\AppData\Local\Microsoft\WindowsApps;C:\Users\ruben\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\ruben\AppData\Roaming\npm;C:\ProgramData\chocolatey\bin;C:\Android\Sdk\emulator;C:\Android\Sdk\tools;C:\Android\Sdk\tools\bin;C:\Android\Sdk\platform-tools;C:\Program Files (x86)\Microsoft SQL Server\160\Tools\Binn\;C:\Program Files\Microsoft SQL Server\160\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\Microsoft SQL Server\160\DTS\Binn\;C:\Program Files\nodejs\;C:\Users\ruben\.console-ninja\.bin;C:\Users\ruben\AppData\Local\Microsoft\WindowsApps;;C:\Users\ruben\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\ruben\AppData\Roaming\npm
@@ -28,6 +28,7 @@ npm manifest:
     },
     "devDependencies": {
       "@types/node": "^20.12.12",
+      "@types/nodemailer": "^6.4.15",
       "fastify": "^4.27.0",
       "prisma": "^5.14.0",
       "tsx": "^4.11.0",
@@ -35,7 +36,9 @@ npm manifest:
     },
     "dependencies": {
       "@prisma/client": "^5.14.0",
+      "axios": "^1.7.2",
       "fastify-type-provider-zod": "^1.2.0",
+      "nodemailer": "^6.9.13",
       "zod": "^3.23.8"
     }
   }
@@ -232,12 +235,19 @@ Lockfile:
     dependencies:
       "@prisma/debug" "5.14.0"
   
-  "@types/node@^20.12.12":
+  "@types/node@*", "@types/node@^20.12.12":
     version "20.12.12"
     resolved "https://registry.yarnpkg.com/@types/node/-/node-20.12.12.tgz#7cbecdf902085cec634fdb362172dfe12b8f2050"
     integrity sha512-eWLDGF/FOSPtAvEqeRAQ4C8LSA7M1I7i0ky1I8U7kD1J5ITyW3AsRhQrKVoWf5pFKZ2kILsEGJhsI9r93PYnOw==
     dependencies:
       undici-types "~5.26.4"
+  
+  "@types/nodemailer@^6.4.15":
+    version "6.4.15"
+    resolved "https://registry.yarnpkg.com/@types/nodemailer/-/nodemailer-6.4.15.tgz#494be695e11c438f7f5df738fb4ab740312a6ed2"
+    integrity sha512-0EBJxawVNjPkng1zm2vopRctuWVCxk34JcIlRuXSf54habUWdz1FB7wHDqOqvDa8Mtpt0Q3LTXQkAs2LNyK5jQ==
+    dependencies:
+      "@types/node" "*"
   
   abort-controller@^3.0.0:
     version "3.0.0"
@@ -275,6 +285,11 @@ Lockfile:
       require-from-string "^2.0.2"
       uri-js "^4.4.1"
   
+  asynckit@^0.4.0:
+    version "0.4.0"
+    resolved "https://registry.yarnpkg.com/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
+    integrity sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==
+  
   atomic-sleep@^1.0.0:
     version "1.0.0"
     resolved "https://registry.yarnpkg.com/atomic-sleep/-/atomic-sleep-1.0.0.tgz#eb85b77a601fc932cfe432c5acd364a9e2c9075b"
@@ -287,6 +302,15 @@ Lockfile:
     dependencies:
       "@fastify/error" "^3.3.0"
       fastq "^1.17.1"
+  
+  axios@^1.7.2:
+    version "1.7.2"
+    resolved "https://registry.yarnpkg.com/axios/-/axios-1.7.2.tgz#b625db8a7051fbea61c35a3cbb3a1daa7b9c7621"
+    integrity sha512-2A8QhOMrbomlDuiLeK9XibIBzuHeRcqqNOHp0Cyp5EoJ1IFDh+XZH3A6BkXtv0K4gFGCI0Y4BM7B1wOEi0Rmgw==
+    dependencies:
+      follow-redirects "^1.15.6"
+      form-data "^4.0.0"
+      proxy-from-env "^1.1.0"
   
   base64-js@^1.3.1:
     version "1.5.1"
@@ -301,10 +325,22 @@ Lockfile:
       base64-js "^1.3.1"
       ieee754 "^1.2.1"
   
+  combined-stream@^1.0.8:
+    version "1.0.8"
+    resolved "https://registry.yarnpkg.com/combined-stream/-/combined-stream-1.0.8.tgz#c3d45a8b34fd730631a110a8a2520682b31d5a7f"
+    integrity sha512-FQN4MRfuJeHf7cBbBMJFXhKSDq+2kAArBlmRBvcvFE5BB1HZKXtSFASDhdlz9zOYwxh8lDdnvmMOe/+5cdoEdg==
+    dependencies:
+      delayed-stream "~1.0.0"
+  
   cookie@^0.6.0:
     version "0.6.0"
     resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.6.0.tgz#2798b04b071b0ecbff0dbb62a505a8efa4e19051"
     integrity sha512-U71cyTamuh1CRNCfpGY6to28lxvNwPG4Guz/EVjgf3Jmzv0vlDp1atT9eS5dDjMYHucpHbWns6Lwf3BKz6svdw==
+  
+  delayed-stream@~1.0.0:
+    version "1.0.0"
+    resolved "https://registry.yarnpkg.com/delayed-stream/-/delayed-stream-1.0.0.tgz#df3ae199acadfb7d440aaae0b29e2272b24ec619"
+    integrity sha512-ZySD7Nf91aLB0RxL4KGrKHBXl7Eds1DAmEdcoVawXnLD7SDhpNgtuII2aAkg7a7QS41jxPSZ17p4VdGnMHk3MQ==
   
   esbuild@~0.20.2:
     version "0.20.2"
@@ -435,6 +471,20 @@ Lockfile:
       fast-querystring "^1.0.0"
       safe-regex2 "^3.1.0"
   
+  follow-redirects@^1.15.6:
+    version "1.15.6"
+    resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.6.tgz#7f815c0cda4249c74ff09e95ef97c23b5fd0399b"
+    integrity sha512-wWN62YITEaOpSK584EZXJafH1AGpO8RVgElfkuXbTOrPX4fIfOyEpW/CsiNd8JdYrAoOvafRTOEnvsO++qCqFA==
+  
+  form-data@^4.0.0:
+    version "4.0.0"
+    resolved "https://registry.yarnpkg.com/form-data/-/form-data-4.0.0.tgz#93919daeaf361ee529584b9b31664dc12c9fa452"
+    integrity sha512-ETEklSGi5t0QMZuiXoA/Q6vcnxcLQP5vdugSpuAyi6SVGi2clPPp+xgEhuMaHC+zGgn31Kd235W35f7Hykkaww==
+    dependencies:
+      asynckit "^0.4.0"
+      combined-stream "^1.0.8"
+      mime-types "^2.1.12"
+  
   forwarded@0.2.0:
     version "0.2.0"
     resolved "https://registry.yarnpkg.com/forwarded/-/forwarded-0.2.0.tgz#2269936428aad4c15c7ebe9779a84bf0b2a81811"
@@ -482,6 +532,23 @@ Lockfile:
       cookie "^0.6.0"
       process-warning "^3.0.0"
       set-cookie-parser "^2.4.1"
+  
+  mime-db@1.52.0:
+    version "1.52.0"
+    resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.52.0.tgz#bbabcdc02859f4987301c856e3387ce5ec43bf70"
+    integrity sha512-sPU4uV7dYlvtWJxwwxHD0PuihVNiE7TyAbQ5SWxDCB9mUYvOgroQOwYQQOKPJ8CIbE+1ETVlOoK1UC2nU3gYvg==
+  
+  mime-types@^2.1.12:
+    version "2.1.35"
+    resolved "https://registry.yarnpkg.com/mime-types/-/mime-types-2.1.35.tgz#381a871b62a734450660ae3deee44813f70d959a"
+    integrity sha512-ZDY+bPm5zTTF+YpCrAU9nK0UgICYPT0QtT1NZWFv4s++TNkcgVaT0g6+4R2uI4MjQjzysHB1zxuWL50hzaeXiw==
+    dependencies:
+      mime-db "1.52.0"
+  
+  nodemailer@^6.9.13:
+    version "6.9.13"
+    resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-6.9.13.tgz#5b292bf1e92645f4852ca872c56a6ba6c4a3d3d6"
+    integrity sha512-7o38Yogx6krdoBf3jCAqnIN4oSQFx+fMa0I7dK1D+me9kBxx12D+/33wSb+fhOCtIxvYJ+4x4IMEhmhCKfAiOA==
   
   on-exit-leak-free@^2.1.0:
     version "2.1.2"
@@ -542,6 +609,11 @@ Lockfile:
     dependencies:
       forwarded "0.2.0"
       ipaddr.js "1.9.1"
+  
+  proxy-from-env@^1.1.0:
+    version "1.1.0"
+    resolved "https://registry.yarnpkg.com/proxy-from-env/-/proxy-from-env-1.1.0.tgz#e102f16ca355424865755d2c9e8ea4f24d58c3e2"
+    integrity sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==
   
   punycode@^2.1.0:
     version "2.3.1"
