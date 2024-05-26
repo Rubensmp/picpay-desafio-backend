@@ -23,7 +23,7 @@ export async function refoundToUser(app: FastifyInstance){
 
     const transaction = await prisma.transaction.findUnique({
       where: {
-        transactionId
+        id: transactionId
       }
     })
 
@@ -78,10 +78,10 @@ export async function refoundToUser(app: FastifyInstance){
         amount: transaction.amount,
         payerId: payee.id,
         payeeId: payer.id,
-        refoundFrom: transaction.transactionId
+        refoundFrom: transaction.id
       }
     })
 
-    return reply.status(201).send({ refoundId: refound.transactionId })
+    return reply.status(201).send({ refoundId: refound.id })
   })
 }

@@ -2,23 +2,28 @@ POST http://localhost:3333/user
 Content-Type: application/json
 
 {
-  "name": "Hudson Gabriel",
-  "email": "hgr@gmail.com",
-  "cpf": "07176378902",
+  "name": "King James",
+  "email": "kj@gmail.com",
+  "cpf": "07176378901123",
   "password": "123456"
 }
 
 ###
 
 //:payerId/:payeeId
-POST http://localhost:3333/transaction/72bc4df3-f748-4d64-9254-66f0a79d0f95/8488ce9e-1d17-4f17-bd44-8815d130caf9
+POST http://localhost:3333/transaction/e9b952a5-0149-4084-9739-0c242161f509/61030954-11e2-4a9e-b1d2-e3dea34def4f
 Content-Type: application/json
 
 {
-  "amount": 2
+  "amount": 10
 }
 
 ###
 
 //:transactionId
-Get http://localhost:3333/transaction/970fad7c-5408-4b01-9f88-c7edc522620d
+Get http://localhost:3333/transaction/fe924f7a-a216-4d0d-bf95-406e826296b0
+
+###
+
+//:userId
+Get http://localhost:3333/user/transactions/61030954-11e2-4a9e-b1d2-e3dea34def4f

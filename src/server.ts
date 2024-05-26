@@ -8,6 +8,7 @@ import { jsonSchemaTransform, serializerCompiler, validatorCompiler } from "fast
 import { registerForUser } from "./routes/register-user";
 import { tranferToUser } from "./routes/transfer";
 import { refoundToUser } from "./routes/refound";
+import { getUserTransactions } from "./routes/get-transactions";
 
 const app = fastify()
 
@@ -39,6 +40,7 @@ app.setSerializerCompiler(serializerCompiler);
 app.register(registerForUser)
 app.register(tranferToUser)
 app.register(refoundToUser)
+app.register(getUserTransactions)
 
 
 app.listen({ port: 3333, host: '0.0.0.0' }).then(() => {
