@@ -3,7 +3,7 @@ import { ZodTypeProvider } from "fastify-type-provider-zod";
 import { z } from "zod";
 import { prisma } from "../lib/prisma";
 import axios from "axios";
-
+import * as nodemailer from "nodemailer";
 
 export async function tranfeToUser(app: FastifyInstance){
   app.withTypeProvider<ZodTypeProvider>().post('/transaction/:payerId/:payeeId', {
@@ -94,6 +94,56 @@ export async function tranfeToUser(app: FastifyInstance){
         updatedAt: new Date()
       }
     })
+
+    var transportPayer = nodemailer.createTransport({
+      host: "sandbox.smtp.mailtrap.io",
+      port: 2525,
+      auth: {
+        user: "11fdd73973f81d",
+        pass: "0fcbb2d56a8def"
+      }
+    });
+
+    let mailOptionsPayer = {
+      from: 'teste@aaa.com',
+      to: payer.email,
+      subject: 'Transfer made',
+      text: `Notification of transfer from your account to ${payee.name} in the amount of ${amount} dollars`
+    };
+
+    transportPayer.sendMail(mailOptionsPayer, function(err, data) {
+      if (err) {
+        console.log("Error " + err);
+      } else {
+        console.log(`Email sent to ${payer.email} successfully`);
+      }
+    });
+
+    var transportPayee = nodemailer.createTransport({
+      host: "sandbox.smtp.mailtrap.io",
+      port: 2525,
+      auth: {
+        user: "11fdd73973f81d",
+        pass: "0fcbb2d56a8def"
+      }
+    });
+
+    let mailOptionsPayee = {
+      from: 'teste@aaa.com',
+      to: payee.email,
+      subject: 'Transfer made',
+      text: `Notification of transfer from ${payee.name}  account to yours in the amount of ${amount} dollars`
+    };
+
+    transportPayee.sendMail(mailOptionsPayee, function(err, data) {
+      if (err) {
+        console.log("Error " + err);
+      } else {
+        console.log(`Email sent to ${payee.email} successfully`);
+      }
+    });
+
+
 
     return reply.status(201).send({ transactionId: transaction.transactionId })
   })
